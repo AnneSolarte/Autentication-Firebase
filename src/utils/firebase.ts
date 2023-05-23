@@ -9,6 +9,9 @@ import {
   browserSessionPersistence,
   onAuthStateChanged
 } from "firebase/auth";
+import { dispatch } from "../store";
+import { navigate } from "../store/actions";
+import { Screens } from "../types/navigation";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD_zIJkKWOgeTTH-h-Fg1N-XxN8nB1Njyc",

@@ -37,7 +37,10 @@ export default class Dashboard extends HTMLElement {
 
   logOutUser(){
     if(appState.user !== null || ''){
-      dispatch(setUserCredentials(''))
+      dispatch(setUserCredentials(''));
+      sessionStorage.clear();
+      dispatch(navigate(Screens.LOGIN));
+      location.reload();
     }
     
   }
@@ -92,7 +95,6 @@ export default class Dashboard extends HTMLElement {
         if (i instanceof HTMLElement) oldOnesIds.push(i.dataset.pid || "");
       });
       const newOnes = products.filter((prod) => !oldOnesIds.includes(prod.id));
-      console.log(newOnes);
 
       newOnes.forEach((p: Product) => {
         const container = this.ownerDocument.createElement("section");

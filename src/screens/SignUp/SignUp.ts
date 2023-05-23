@@ -2,6 +2,7 @@ import { dispatch } from "../../store";
 import { navigate } from "../../store/actions";
 import { Screens } from "../../types/navigation";
 import Firebase from "../../utils/firebase";
+import { setUserCredentials } from "../../store/actions";
 
 const credentials = { email: "", password: "" };
 
@@ -16,8 +17,12 @@ export default class SignUp extends HTMLElement {
   }
 
   async handleLoginButton() {
-    Firebase.registerUser(credentials);
-    dispatch(navigate(Screens.LOGIN));
+    const user = await Firebase.registerUser(credentials);
+    console.log(user);
+    if(user) {
+      dispatch(navigate(Screens.LOGIN)) 
+      sessionStorage.clear();
+    };
   }
 
   render() {
@@ -44,7 +49,7 @@ export default class SignUp extends HTMLElement {
     this.shadowRoot?.appendChild(password);
 
     const loginBtn = this.ownerDocument.createElement("button");
-    loginBtn.innerText = "login";
+    loginBtn.innerText = "SignUp";
     loginBtn.addEventListener("click", this.handleLoginButton);
     this.shadowRoot?.appendChild(loginBtn);
   }

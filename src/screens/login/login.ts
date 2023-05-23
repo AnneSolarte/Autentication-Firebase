@@ -1,14 +1,16 @@
 import { dispatch } from "../../store";
 import { navigate } from "../../store/actions";
 import { Screens } from "../../types/navigation";
+import { appState } from "../../store";
 import Firebase from "../../utils/firebase";
 
-const credentials = { email: "", password: "" };
+const credentials2 = { email: "", password: "" };
 
 export default class Login extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+    console.log('AppState',appState.user);
   }
 
   connectedCallback() {
@@ -16,14 +18,12 @@ export default class Login extends HTMLElement {
   }
 
   async handleLoginButton() {
-    Firebase.loginUser(credentials);
-    dispatch(navigate(Screens.DASHBOARD));
-
+    Firebase.loginUser(credentials2);
   }
 
   render() {
     const title = this.ownerDocument.createElement("h1");
-    title.innerText = "Welcome! please sign in";
+    title.innerText = "Welcome! please Login";
     this.shadowRoot?.appendChild(title);
 
     const email = this.ownerDocument.createElement("input");
@@ -31,7 +31,7 @@ export default class Login extends HTMLElement {
     email.type = "email";
     email.addEventListener(
       "change",
-      (e: any) => (credentials.email = e.target.value)
+      (e: any) => (credentials2.email = e.target.value)
     );
     this.shadowRoot?.appendChild(email);
 
@@ -40,7 +40,7 @@ export default class Login extends HTMLElement {
     password.type = "password";
     password.addEventListener(
       "change",
-      (e: any) => (credentials.password = e.target.value)
+      (e: any) => (credentials2.password = e.target.value)
     );
     this.shadowRoot?.appendChild(password);
 
